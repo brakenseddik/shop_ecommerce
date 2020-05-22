@@ -1,6 +1,6 @@
 # shoppy
 
-A new Flutter application.
+E-Commerce App built in flutter
 
 ## Getting Started
 
