@@ -50,6 +50,8 @@ class Category extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Container(
+          height: 100,
+          width: 100,
           decoration: BoxDecoration(
               color: Colors.amberAccent.shade100,
               borderRadius: BorderRadius.all(Radius.circular(10))),

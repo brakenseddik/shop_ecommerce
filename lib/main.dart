@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:shoppy/components/horizontal_listview.dart';
 
+import 'components/products.dart';
+
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -132,6 +134,15 @@ class _HomePageState extends State<HomePage> {
           ),
           //horizontal  LISTVIEW
           horizontalListView(),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('Recent products'),
+          ),
+          // GRIDVIEW
+          Container(
+            height: 200,
+            child: Products(),
+          )
         ],
       ),
     );
