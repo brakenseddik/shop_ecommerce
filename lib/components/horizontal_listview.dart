@@ -5,7 +5,7 @@ class horizontalListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.0,
+      height: 120.0,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
@@ -50,10 +50,14 @@ class Category extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Container(
-          height: 100,
-          width: 100,
+          height: 120,
+          width: 120,
           decoration: BoxDecoration(
-              color: Colors.amberAccent.shade100,
+              border: Border.all(
+                color: Colors.red, //                   <--- border color
+                width: 3.0,
+              ),
+              color: Colors.yellow.withOpacity(0.5),
               borderRadius: BorderRadius.all(Radius.circular(10))),
           //width: 100.0,
           child: Column(

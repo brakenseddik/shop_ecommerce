@@ -1,20 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shoppy/pages/product_details.dart';
 
 class Products extends StatelessWidget {
   var products_list = [
     {
-      'name': 'Blazer',
+      'name': 'Black Blazer',
       'picture': 'images/products/blazer1.jpeg',
+      'old_price': 145,
+      'price': 87
+    },
+    {
+      'name': 'Black Blazer',
+      'picture': 'images/products/blazer2.jpeg',
       'old_price': 123,
       'price': 87
     },
     {
-      'name': 'Dress',
-      'picture': 'images/products/dress1.jpeg',
+      'name': 'Hills boi',
+      'picture': 'images/products/hills1.jpeg',
       'old_price': 123,
       'price': 87
-    }
+    },
+    {
+      'name': 'Hills boi',
+      'picture': 'images/products/hills2.jpeg',
+      'old_price': 123,
+      'price': 87
+    },
+    {
+      'name': 'red skirt',
+      'picture': 'images/products/skt1.jpeg',
+      'old_price': 98,
+      'price': 44
+    },
   ];
 
   @override
@@ -48,39 +67,43 @@ class SingleProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Card(
-        child: Hero(
-          tag: 'prod',
-          child: Material(
-            child: InkWell(
-              onTap: () {},
-              child: GridTile(
-                footer: Container(
-                  color: Colors.white70,
-                  child: ListTile(
-                    leading: Text(
+        child: Material(
+          child: InkWell(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ProductDetails(
+                      //Passing the values from products list to product detail page
+                      product_detail_name: prod_name,
+                      product_detail_picture: prod_picture,
+                      product_detail_oldprice: prod_oldprice,
+                      product_detail_price: prod_price,
+                    ))),
+            child: GridTile(
+              footer: Container(
+                color: Colors.white,
+                height: 50,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: Text(
                       prod_name,
                       style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    title: Text(
-                      '\$$prod_price',
-                      style: TextStyle(
-                          color: Colors.amber, fontWeight: FontWeight.w700),
-                    ),
-                    subtitle: Text(
-                      '\$$prod_oldprice',
-                      style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
                           color: Colors.black,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24),
+                    )),
+                    Text(
+                      '\$ ${prod_price}',
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24),
+                    )
+                  ],
                 ),
-                child: Image.asset(
-                  prod_picture,
-                  fit: BoxFit.cover,
-                ),
+              ),
+              child: Image.asset(
+                prod_picture,
+                fit: BoxFit.cover,
               ),
             ),
           ),

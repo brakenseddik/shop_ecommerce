@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
         animationCurve: Curves.fastOutSlowIn,
         animationDuration: Duration(milliseconds: 1000),
         dotColor: Colors.amber,
-        autoplay: false,
+        dotBgColor: Colors.transparent,
         images: [
           AssetImage('images/c1.jpg'),
           AssetImage('images/m1.jpeg'),
@@ -41,7 +41,13 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.amber,
-        title: Text('Shoppy'),
+        centerTitle: true,
+        title: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            },
+            child: Text('Shoppy')),
         actions: <Widget>[
           IconButton(
               icon: Icon(
@@ -49,12 +55,6 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,
               ),
               onPressed: null),
-          IconButton(
-              icon: Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
-              ),
-              onPressed: null)
         ],
       ),
       drawer: Drawer(
@@ -99,9 +99,9 @@ class _HomePageState extends State<HomePage> {
                     ))),
             InkWell(
                 child: ListTile(
-                    title: Text('Categories'),
+                    title: Text('Shopping Cart'),
                     leading: Icon(
-                      Icons.dashboard,
+                      Icons.shopping_cart,
                       color: Colors.amber,
                     ))),
             InkWell(
@@ -114,7 +114,11 @@ class _HomePageState extends State<HomePage> {
             Divider(),
             InkWell(
                 child: ListTile(
-                    title: Text('Settings'), leading: Icon(Icons.settings))),
+                    title: Text('Settings'),
+                    leading: Icon(
+                      Icons.settings,
+                      color: Colors.lightBlue,
+                    ))),
             InkWell(
                 child: ListTile(
                     title: Text('About'),
@@ -130,17 +134,29 @@ class _HomePageState extends State<HomePage> {
           carousel,
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text('Categories'),
+            child: Text(
+              'Categories',
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 28,
+                  color: Colors.orange),
+            ),
           ),
           //horizontal  LISTVIEW
           horizontalListView(),
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text('Recent products'),
+            child: Text(
+              'Recent products',
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 28,
+                  color: Colors.orange),
+            ),
           ),
           // GRIDVIEW
           Container(
-            height: 200,
+            height: 320,
             child: Products(),
           )
         ],
