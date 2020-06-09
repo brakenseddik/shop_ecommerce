@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:shoppy/components/horizontal_listview.dart';
+import 'package:shoppy/pages/cart.dart';
 
 import 'components/products.dart';
 
@@ -50,11 +51,21 @@ class _HomePageState extends State<HomePage> {
             child: Text('Shoppy')),
         actions: <Widget>[
           IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            onPressed: () {},
+          ),
+          IconButton(
               icon: Icon(
-                Icons.search,
+                Icons.shopping_cart,
                 color: Colors.white,
               ),
-              onPressed: null),
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Cart()));
+              }),
         ],
       ),
       drawer: Drawer(
@@ -98,6 +109,8 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.amber,
                     ))),
             InkWell(
+                onTap: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Cart())),
                 child: ListTile(
                     title: Text('Shopping Cart'),
                     leading: Icon(
