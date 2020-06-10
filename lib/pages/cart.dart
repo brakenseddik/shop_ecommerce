@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppy/components/cart_products.dart';
 import 'package:shoppy/main.dart';
 
 class Cart extends StatefulWidget {
@@ -35,6 +36,7 @@ class _CartState extends State<Cart> {
               onPressed: null),
         ],
       ),
+      body: CartProducts(),
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Row(
