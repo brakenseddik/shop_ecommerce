@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppy/components/products.dart';
 import 'package:shoppy/main.dart';
+import 'package:shoppy/pages/home.dart';
 
 class ProductDetails extends StatefulWidget {
   final product_detail_name;
