@@ -115,6 +115,8 @@ class _LoginState extends State<Login> {
           Visibility(
               visible: loading ?? true,
               child: Container(
+                alignment: Alignment.center,
+                color: Colors.white.withOpacity(0.7),
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
                 ),
