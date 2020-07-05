@@ -21,7 +21,6 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     IsSigneedIn();
   }
@@ -60,10 +59,10 @@ class _LoginState extends State<Login> {
         (await firebaseAuth.signInWithCredential(credential)).user;
 
     if (firebaseUser != null) {
-      final QuerySnapshot result = (await Firestore.instance
-              .collection('users')
-              .where('id', isEqualTo: firebaseUser..uid))
-          .getDocuments() as QuerySnapshot;
+      final QuerySnapshot result = await Firestore.instance
+          .collection('users')
+          .where('id', isEqualTo: firebaseUser.uid)
+          .getDocuments();
       final List<DocumentSnapshot> documents = result.documents;
       if (documents.length == 0) {
         //insert the user to our collection
@@ -81,13 +80,16 @@ class _LoginState extends State<Login> {
       } else {
         await preferences.setString('id', documents[0]['id']);
         await preferences.setString('username', documents[0]['username']);
-        await preferences.setString(
-            'profilePicture', documents[0]['profilePicture']);
+        await preferences.setString('profilePicture', documents[0]['photoUrl']);
       }
       Fluttertoast.showToast(msg: 'Logged in successful');
       setState(() {
         loading = false;
       });
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+    } else {
+      Fluttertoast.showToast(msg: 'logged in failed');
     }
   }
 
