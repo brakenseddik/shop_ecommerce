@@ -53,7 +53,7 @@ class _LoginState extends State<Login> {
     GoogleSignInAccount googleUser = await googleSignIn.signIn();
 
     GoogleSignInAuthentication googleSignInAuthentication =
-    await googleUser.authentication;
+        await googleUser.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
         accessToken: googleSignInAuthentication.accessToken,
