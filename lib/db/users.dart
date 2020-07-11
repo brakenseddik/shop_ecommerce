@@ -5,12 +5,12 @@ class UserServices {
   FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
   String ref = 'users';
 
-  createUser(String uid, Map value) {
+  createUser(Map value) {
     _firebaseDatabase
         .reference()
         .child(ref)
         .push()
         .set(value)
-        .catchError((e) => print(e));
+        .catchError((e) => {print(e.toString())});
   }
 }
