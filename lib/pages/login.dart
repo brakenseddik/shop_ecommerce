@@ -33,8 +33,13 @@ class _LoginState extends State<Login> {
     setState(() {
       loading = true;
     });
-    preferences = await SharedPreferences.getInstance();
-    isLoggedIn = await googleSignIn.isSignedIn();
+    FirebaseUser user = await firebaseAuth.currentUser().then((user) {
+      if (user != null) {
+        setState(() {
+          isLoggedIn = true;
+        });
+      }
+    });
     if (isLoggedIn) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomePage()));
@@ -45,57 +50,6 @@ class _LoginState extends State<Login> {
   }
 
   // ignore: non_constant_identifier_names
-  Future HandleSignIn() async {
-    preferences = await SharedPreferences.getInstance();
-    setState(() {
-      loading = true;
-    });
-    GoogleSignInAccount googleUser = await googleSignIn.signIn();
-
-    GoogleSignInAuthentication googleSignInAuthentication =
-        await googleUser.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken);
-
-    FirebaseUser firebaseUser =
-        (await firebaseAuth.signInWithCredential(credential)).user;
-
-    if (firebaseUser != null) {
-      final QuerySnapshot result = await Firestore.instance
-          .collection('users')
-          .where('id', isEqualTo: firebaseUser.uid)
-          .getDocuments();
-      final List<DocumentSnapshot> documents = result.documents;
-      if (documents.length == 0) {
-        //insert the user to our collection
-        Firestore.instance
-            .collection('users')
-            .document(firebaseUser.uid)
-            .setData({
-          'id': firebaseUser.uid,
-          'username': firebaseUser.displayName,
-          'profilePicture': firebaseUser.photoUrl
-        });
-        await preferences.setString('id', firebaseUser.uid);
-        await preferences.setString('username', firebaseUser.displayName);
-        await preferences.setString('profilePicture', firebaseUser.photoUrl);
-      } else {
-        await preferences.setString('id', documents[0]['id']);
-        await preferences.setString('username', documents[0]['username']);
-        await preferences.setString('profilePicture', documents[0]['photoUrl']);
-      }
-      Fluttertoast.showToast(msg: 'Logged in successful');
-      setState(() {
-        loading = false;
-      });
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
-    } else {
-      Fluttertoast.showToast(msg: 'logged in failed');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
