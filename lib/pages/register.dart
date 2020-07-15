@@ -11,9 +11,9 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
-  UserServices _userServices;
-  TextEditingController _nameController = TextEditingController();
+  UserServices _userServices = UserServices();
 
+  TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmpasswordController = TextEditingController();
@@ -31,23 +31,33 @@ class _RegisterState extends State<Register> {
 
     if (formState.validate()) {
       formState.reset();
-      FirebaseUser user = await firebaseAuth.currentUser();
+      print('hello');
+      FirebaseUser user = await firebaseAuth.currentUser().catchError((e) =>
+      {
+        print(e)
+      });
       if (user == null) {
+        print('user is Null');
         firebaseAuth
             .createUserWithEmailAndPassword(
-                email: _emailController.text,
-                password: _passwordController.text)
-            .then((user) => {
-                  _userServices.createUser({
-                    "username": _nameController.text,
-                    "email": _emailController.text,
-                    "userId": user.user.uid,
-                    "gender": gender,
-                  })
-                })
+            email: _emailController.text,
+            password: _passwordController.text)
+            .then((user) {
+          print('user signed in storing in db');
+          _userServices.createUser({
+            "username": _nameController.text,
+            "email": _emailController.text,
+            "userId": user.user.uid,
+            "gender": gender,
+          });
+        })
             .catchError((err) => {print(err.toString())});
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage()));
+      }
+      else {
+        print('user already exist\nSigning Out');
+        firebaseAuth.signOut();
       }
     }
   }
@@ -264,9 +274,14 @@ class _RegisterState extends State<Register> {
                                   padding: const EdgeInsets.only(left: 12.0),
                                   child: MaterialButton(
                                     onPressed: () async {
+                                      print('hi');
                                       validateForm();
                                     },
-                                    minWidth: MediaQuery.of(context).size.width,
+
+                                    minWidth: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width,
                                     child: Text('Register',
                                         style: TextStyle(
                                             color: Colors.white,
