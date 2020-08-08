@@ -11,6 +11,6 @@ void main() {
   runApp(MaterialApp(
     theme: ThemeData(primaryColor: Colors.amber),
     debugShowCheckedModeBanner: false,
-    home: Register(),
+    home: Login(),
   ));
 }
