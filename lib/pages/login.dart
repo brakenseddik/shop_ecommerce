@@ -238,6 +238,7 @@ class _LoginState extends State<Login> {
                                       child: Image.asset(
                                         "images/google.png",
                                         width: 50,
+                                        height: 50,
                                       ))),
                             ),
                           ],

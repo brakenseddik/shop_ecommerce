@@ -1,8 +1,10 @@
-import 'package:carousel_pro/carousel_pro.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shoppy/components/horizontal_listview.dart';
+import 'package:carousel_pro/carousel_pro.dart';
+
 import 'package:shoppy/components/products.dart';
-import 'package:shoppy/pages/cart.dart';
+import 'package:shoppy/pages/login.dart';
+import 'package:shoppy/utils/package.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,63 +12,68 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    Widget carousel = Container(
-      height: 200,
-      child: Carousel(
+    Widget image_carousel = new Container(
+      height: 200.0,
+      child: new Carousel(
         boxFit: BoxFit.cover,
-        animationCurve: Curves.fastOutSlowIn,
-        animationDuration: Duration(milliseconds: 1000),
-        dotColor: Colors.amber,
-        dotBgColor: Colors.transparent,
         images: [
-          AssetImage('images/c1.jpg'),
           AssetImage('images/m1.jpeg'),
-          AssetImage('images/m2.jpg'),
-          AssetImage('images/w1.jpeg'),
-          AssetImage('images/w3.jpeg'),
+          AssetImage('images/c1.jpg'),
           AssetImage('images/w4.jpeg'),
+          AssetImage('images/m2.jpg'),
         ],
+        autoplay: false,
+        dotBgColor: Colors.transparent,
+        dotColor: deepOrange,
+        //dotSize: 4.0,
       ),
     );
+
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.amber,
-        centerTitle: true,
-        title: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
+      appBar: new AppBar(
+        iconTheme: IconThemeData(color: deepOrange),
+        elevation: 0.1,
+        backgroundColor: white,
+        title: Material(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.grey[100],
+          elevation: 0.0,
+          child: TextFormField(
+            controller: _searchController,
+            decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(10.0),
+                hintText: "Search...",
+                border: InputBorder.none),
+            validator: (value) {
+              if (value.isEmpty) {
+                return "The search field cannot be empty";
+              }
+              return null;
             },
-            child: Text('Shoppy')),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            onPressed: () {},
           ),
-          IconButton(
+        ),
+        actions: <Widget>[
+          new IconButton(
               icon: Icon(
                 Icons.shopping_cart,
-                color: Colors.white,
+                color: deepOrange,
               ),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Cart()));
-              }),
+              onPressed: () {})
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
+      drawer: new Drawer(
+        child: new ListView(
           children: <Widget>[
-            //Header
-            UserAccountsDrawerHeader(
+//            header
+            new UserAccountsDrawerHeader(
+              accountName: Text('Santos Enoque'),
+              accountEmail: Text('santosenoque.ss@gmail.com'),
               currentAccountPicture: GestureDetector(
-                child: CircleAvatar(
+                child: new CircleAvatar(
                   backgroundColor: Colors.grey,
                   child: Icon(
                     Icons.person,
@@ -74,96 +81,99 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              decoration: BoxDecoration(color: Colors.amber),
-              accountEmail: Text('seddik.braken@gmail.com'),
-              accountName: Text('Braken Mohammed'),
+              decoration: new BoxDecoration(color: deepOrange),
             ),
-            //Body
+
+//            body
+
             InkWell(
-                child: ListTile(
-                    title: Text('Homepage'),
-                    leading: Icon(
-                      Icons.home,
-                      color: Colors.amber,
-                    ))),
+              onTap: () {},
+              child: ListTile(
+                title: Text('Home Page'),
+                leading: Icon(Icons.home),
+              ),
+            ),
+
             InkWell(
-                child: ListTile(
-                    title: Text('My Account'),
-                    leading: Icon(
-                      Icons.person,
-                      color: Colors.amber,
-                    ))),
+              onTap: () {},
+              child: ListTile(
+                title: Text('My account'),
+                leading: Icon(Icons.person),
+              ),
+            ),
+
             InkWell(
-                child: ListTile(
-                    title: Text('My Orders'),
-                    leading: Icon(
-                      Icons.shopping_basket,
-                      color: Colors.amber,
-                    ))),
+              onTap: () {},
+              child: ListTile(
+                title: Text('My Orders'),
+                leading: Icon(Icons.shopping_basket),
+              ),
+            ),
+
             InkWell(
-                onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Cart())),
-                child: ListTile(
-                    title: Text('Shopping Cart'),
-                    leading: Icon(
-                      Icons.shopping_cart,
-                      color: Colors.amber,
-                    ))),
+              onTap: () {},
+              child: ListTile(
+                title: Text('Categoris'),
+                leading: Icon(Icons.dashboard),
+              ),
+            ),
+
             InkWell(
-                child: ListTile(
-                    title: Text('Favorites'),
-                    leading: Icon(
-                      Icons.favorite,
-                      color: Colors.amber,
-                    ))),
+              onTap: () {},
+              child: ListTile(
+                title: Text('Favourites'),
+                leading: Icon(Icons.favorite),
+              ),
+            ),
+
             Divider(),
+
             InkWell(
-                child: ListTile(
-                    title: Text('Settings'),
-                    leading: Icon(
-                      Icons.settings,
-                      color: Colors.lightBlue,
-                    ))),
-            InkWell(
-                child: ListTile(
-                    title: Text('About'),
-                    leading: Icon(
-                      Icons.help,
-                      color: Colors.green,
-                    ))),
+              onTap: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Login()));
+                });
+              },
+              child: ListTile(
+                title: Text('Log out'),
+                leading: Icon(
+                  Icons.transit_enterexit,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
           ],
         ),
       ),
-      body: ListView(
+      body: new Column(
         children: <Widget>[
-          carousel,
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Categories',
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 28,
-                  color: Colors.orange),
-            ),
+          //image carousel begins here
+          image_carousel,
+
+//          //padding widget
+//          new Padding(padding: const EdgeInsets.all(4.0),
+//            child: Container(
+//                alignment: Alignment.centerLeft,
+//                child: new Text('Categories')),),
+//
+//          //Horizontal list view begins here
+//          HorizontalList(),
+
+          //padding widget
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: new Text('Recent products')),
+              ),
+            ],
           ),
-          //horizontal  LISTVIEW
-          horizontalListView(),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Recent products',
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 28,
-                  color: Colors.orange),
-            ),
-          ),
-          // GRIDVIEW
-          Container(
-            height: 320,
-            child: Products(),
-          )
+
+          //grid view
+          Flexible(child: Products()),
         ],
       ),
     );

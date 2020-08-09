@@ -2,7 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shoppy/db/auth.dart';
 import 'package:shoppy/pages/home.dart';
+import 'package:shoppy/pages/login.dart';
+import 'package:shoppy/utils/package.dart';
 import '../db/users.dart';
 
 class Register extends StatefulWidget {
@@ -26,6 +29,8 @@ class _RegisterState extends State<Register> {
   bool loading = false;
   bool isLoggedIn = false;
   bool hidepass = true;
+
+  Auth auth = Auth();
 
   Future validateForm() async {
     FormState formState = _formKey.currentState;
@@ -75,7 +80,7 @@ class _RegisterState extends State<Register> {
                           alignment: Alignment.topCenter,
                           child: Image.asset(
                             'images/logo.png',
-                            color: Colors.deepOrange,
+                            color: deepOrange,
                             width: 120.0,
 //                height: 240.0,
                           )),
@@ -83,7 +88,7 @@ class _RegisterState extends State<Register> {
                         padding: const EdgeInsets.all(8),
                         child: Material(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
-                          color: Colors.grey.withOpacity(0.5),
+                          color: grey.withOpacity(0.5),
                           elevation: 0.0,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 12.0),
@@ -202,11 +207,11 @@ class _RegisterState extends State<Register> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Register()));
+                                          builder: (context) => Login()));
                                 },
                                 child: Text(
-                                  'Already have an account?',
-                                  style: TextStyle(color: Colors.deepOrange),
+                                  'Already have an account ?',
+                                  style: TextStyle(color: deepOrange),
                                 ))),
                       ),
                       Row(
@@ -220,14 +225,13 @@ class _RegisterState extends State<Register> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               "Or Sign Up with",
-                              style:
-                              TextStyle(fontSize: 20, color: Colors.grey),
+                              style: TextStyle(fontSize: 20, color: grey),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Divider(
-                              color: Colors.red,
+                              color: deepOrange,
                               thickness: 2,
                             ),
                           ),
@@ -244,7 +248,7 @@ class _RegisterState extends State<Register> {
                                     onPressed: () {},
                                     child: Image.asset(
                                       "images/facebook.png",
-                                      width: 50,
+                                      //width: 60,
                                       height: 50,
                                     ))),
                           ),
@@ -253,7 +257,20 @@ class _RegisterState extends State<Register> {
                             const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                             child: Material(
                                 child: MaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      FirebaseUser user =
+                                      await auth.googleSignIn();
+                                      if (user == null) {
+                                        _userServices.createUser({
+                                          'name': user.displayName,
+                                          'picture': user.photoUrl,
+                                          'email': user.email,
+                                          'userId': user.uid
+                                        });
+                                        changeScreenReplacement(
+                                            context, HomePage());
+                                      }
+                                    },
                                     child: Image.asset(
                                       "images/google.png",
                                       width: 50,

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppy/pages/product_details.dart';
+import 'package:shoppy/utils/package.dart';
 
 class Products extends StatelessWidget {
   var products_list = [
@@ -89,14 +90,14 @@ class SingleProduct extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
-                          fontSize: 24),
+                          fontSize: 18),
                     )),
                     Text(
                       '\$ ${prod_price}',
                       style: TextStyle(
-                          color: Colors.red,
+                          color: deepOrange,
                           fontWeight: FontWeight.bold,
-                          fontSize: 24),
+                          fontSize: 18),
                     )
                   ],
                 ),
