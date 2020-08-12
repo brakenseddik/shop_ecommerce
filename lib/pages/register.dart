@@ -83,8 +83,8 @@ class _RegisterState extends State<Register> {
                   Center(
                     child: Form(
                         key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        child: ListView(
+                          //mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Container(
                                 alignment: Alignment.topCenter,
@@ -157,31 +157,29 @@ class _RegisterState extends State<Register> {
                                 elevation: 0.0,
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 12.0),
-                                  child: ListTile(
-                                    title: TextFormField(
-                                      obscureText: hidepass,
-                                      decoration: InputDecoration(
-                                          labelText: 'Password',
-                                          border: InputBorder.none,
-                                          icon: Icon(Icons.lock_outline)),
-                                      keyboardType: TextInputType.emailAddress,
-                                      controller: _passwordController,
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'the password field cannot be empty';
-                                        } else if (value.length < 6) {
-                                          return 'the password too short';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    trailing: IconButton(
-                                        icon: Icon(Icons.remove_red_eye),
-                                        onPressed: () {
-                                          setState(() {
-                                            hidepass = false;
-                                          });
-                                        }),
+                                  child: TextFormField(
+                                    obscureText: hidepass,
+                                    decoration: InputDecoration(
+                                        suffixIcon: IconButton(
+                                            icon: Icon(Icons.remove_red_eye),
+                                            onPressed: () {
+                                              setState(() {
+                                                hidepass = false;
+                                              });
+                                            }),
+                                        labelText: 'Password',
+                                        border: InputBorder.none,
+                                        icon: Icon(Icons.lock_outline)),
+                                    keyboardType: TextInputType.emailAddress,
+                                    controller: _passwordController,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'the password field cannot be empty';
+                                      } else if (value.length < 6) {
+                                        return 'the password too short';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
                               ),
