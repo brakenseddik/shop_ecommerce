@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shoppy/components/products.dart';
 import 'package:shoppy/pages/login.dart';
+import 'package:shoppy/provider/userProvider.dart';
 import 'package:shoppy/utils/package.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,6 +18,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
+
     Widget image_carousel = new Container(
       height: 200.0,
       child: new Carousel(
@@ -40,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: white,
         title: Material(
           borderRadius: BorderRadius.circular(10.0),
-          color: Colors.grey[100],
+          color: Colors.grey.shade300,
           elevation: 0.0,
           child: TextFormField(
             controller: _searchController,
@@ -130,10 +134,7 @@ class _HomePageState extends State<HomePage> {
 
             InkWell(
               onTap: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Login()));
-                });
+                user.SignOut();
               },
               child: ListTile(
                 title: Text('Log out'),

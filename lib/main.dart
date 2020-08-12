@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_pro/carousel_pro.dart';
-import 'package:shoppy/components/horizontal_listview.dart';
-import 'package:shoppy/pages/cart.dart';
 import 'package:shoppy/pages/home.dart';
 import 'package:shoppy/pages/login.dart';
-import 'package:shoppy/pages/register.dart';
+import 'package:shoppy/pages/splash.dart';
 import 'package:shoppy/provider/userProvider.dart';
-import 'components/products.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -22,6 +18,20 @@ void main() {
 class ScreensController extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final user = Provider.of<UserProvider>(context);
+    switch (user.status) {
+      case Status.Uninitialized:
+        return Splash();
+        break;
+      case Status.Unauthenticated:
+      case Status.Unauthenticated:
+        return Login();
+        break;
+      case Status.Authenticated:
+        return HomePage();
+        break;
+      default:
+        return Login();
+    }
   }
 }
