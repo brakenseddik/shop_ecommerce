@@ -126,8 +126,7 @@ class _RegisterState extends State<Register> {
                               controller: _emailController,
                               validator: (value) {
                                 if (value.isEmpty ||
-                                    !RegExp(
-                                        r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                                    !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
                                         .hasMatch(value)) {
                                   return 'Enter a valid email';
                                 }
@@ -187,10 +186,7 @@ class _RegisterState extends State<Register> {
                                   print('hi');
                                   validateForm();
                                 },
-                                minWidth: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width,
+                                minWidth: MediaQuery.of(context).size.width,
                                 child: Text('Register',
                                     style: TextStyle(
                                         color: Colors.white,
@@ -242,7 +238,7 @@ class _RegisterState extends State<Register> {
                         children: <Widget>[
                           Padding(
                             padding:
-                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                                const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                             child: Material(
                                 child: MaterialButton(
                                     onPressed: () {},
@@ -254,12 +250,12 @@ class _RegisterState extends State<Register> {
                           ),
                           Padding(
                             padding:
-                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                                const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                             child: Material(
                                 child: MaterialButton(
                                     onPressed: () async {
                                       FirebaseUser user =
-                                      await auth.googleSignIn();
+                                          await auth.googleSignIn();
                                       if (user == null) {
                                         _userServices.createUser({
                                           'name': user.displayName,
