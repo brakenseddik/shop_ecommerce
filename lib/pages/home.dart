@@ -44,20 +44,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   )),
             ),
-            ProductCard(
-              brand: 'SantosBrand',
-              name: 'Lux Blazer',
-              price: 24.00,
-              onSale: true,
-              picture: '',
-            ),
-            ProductCard(
-              brand: 'SantosBrand',
-              name: 'Lux Blazer',
-              price: 24.00,
-              onSale: true,
-              picture: '',
-            ),
+
             ProductCard(
               brand: 'SantosBrand',
               name: 'Lux Blazer',
