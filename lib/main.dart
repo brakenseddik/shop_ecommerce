@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:shoppy/pages/home.dart';
 import 'package:shoppy/pages/login.dart';
 import 'package:shoppy/pages/splash.dart';
+import 'package:shoppy/provider/app_provider.dart';
 import 'package:shoppy/provider/userProvider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (_) => UserProvider.initialize(),
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: UserProvider.initialize()),
+        ChangeNotifierProvider.value(value: AppProvider())
+      ],
       child: MaterialApp(
         theme: ThemeData(primaryColor: Colors.amber),
         debugShowCheckedModeBanner: false,

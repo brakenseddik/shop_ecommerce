@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+import 'package:shoppy/provider/app_provider.dart';
 import 'package:shoppy/provider/userProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppy/widgets/custom_app_bar.dart';
@@ -13,6 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    var appProvider = Provider.of(AppProvider);
     return Scaffold(
       body: SafeArea(
         child: ListView(
